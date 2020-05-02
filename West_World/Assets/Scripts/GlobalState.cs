@@ -14,11 +14,11 @@ public class GlobalState : State
                 {
                     miner.m_StateMachine.ChangeState(new VisitBankAndDepositGold());
                 }
-                else if (miner.m_Thirst > 7 && miner.m_StateMachine.m_CurrentState.stateName != StateName.GoHomeAndSleepTilRested)
+                else if (miner.m_Thirst > 7 && miner.m_StateMachine.m_CurrentState.stateName != StateName.GoHomeAndSleepTilRested && miner.m_StateMachine.m_CurrentState.stateName != StateName.QuenchThirst)
                 {
                     miner.m_StateMachine.ChangeState(new QuenchThirst());
                 }
-                else if (miner.m_Fatigue > 7 && miner.m_StateMachine.m_CurrentState.stateName != StateName.QuenchThirst)
+                else if (miner.m_Fatigue > 7 && miner.m_StateMachine.m_CurrentState.stateName != StateName.QuenchThirst && miner.m_StateMachine.m_CurrentState.stateName != StateName.GoHomeAndSleepTilRested) 
                 {
                     miner.m_StateMachine.ChangeState(new GoHomeAndSleepTilRested());
                 }

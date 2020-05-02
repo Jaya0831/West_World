@@ -5,7 +5,13 @@ using UnityEngine;
 public class GoHomeAndSleepTilRested : State
 {
     int timer;
-    public new StateName stateName = StateName.GoHomeAndSleepTilRested;
+    public override StateName stateName
+    {
+        get
+        {
+            return StateName.GoHomeAndSleepTilRested;
+        }
+    }
     public override void Enter(Miner miner)
     {
         miner.GoTo(Node.Location_Type.Home);

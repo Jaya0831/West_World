@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class VisitBankAndDepositGold : State
 {
-    public new StateName stateName = StateName.VisitBankAndDepositGold;
+    public override StateName stateName
+    {
+        get
+        {
+            return StateName.VisitBankAndDepositGold;
+        }
+    }
     public override void Enter(Miner miner)
     {
         miner.GoTo(Node.Location_Type.Bank); 

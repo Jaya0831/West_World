@@ -7,7 +7,7 @@ public class StateMachine : MonoBehaviour
     /// <summary>
     /// 表示当前状态实例的指针
     /// </summary>
-    public State m_CurrentState;
+    public State m_CurrentState = new EnterMineAndDigForNugget();
     /// <summary>
     /// 表示先前状态
     /// </summary>
@@ -15,33 +15,24 @@ public class StateMachine : MonoBehaviour
     /// <summary>
     /// 表示全局状态
     /// </summary>
-    private State m_GlobalState;
+    private State m_GlobalState = new GlobalState();
     /// <summary>
     /// 拥有它的智能体
     /// </summary>
     public GameObject owner;
-    private void Awake()
-    {
-        m_GlobalState = new GlobalState();
-        Debug.Log(m_GlobalState);
-        m_CurrentState = new EnterMineAndDigForNugget();
-        Debug.Log(m_CurrentState);
-    }
+
+
     private void Start()
     {
+        m_CurrentState = new EnterMineAndDigForNugget();
+        m_GlobalState = new GlobalState();
         m_CurrentState.Enter(owner.GetComponent<Miner>());
     }
     private void Update()
     {
-        Debug.Log(m_CurrentState);
-        if (m_GlobalState)
-        {
-            m_GlobalState.Execute(owner.GetComponent<Miner>());
-        }
-        if (m_CurrentState)
-        {
-            m_CurrentState.Execute(owner.GetComponent<Miner>());
-        }
+        //Debug.Log(m_CurrentState);
+        m_GlobalState.Execute(owner.GetComponent<Miner>());
+        m_CurrentState.Execute(owner.GetComponent<Miner>());
     }
     /// <summary>
     /// 转换状态

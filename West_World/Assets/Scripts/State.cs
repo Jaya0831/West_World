@@ -8,11 +8,17 @@ public class State : MonoBehaviour
     /// <summary>
     /// 状态类名称
     /// </summary>
-    public enum StateName {VisitBankAndDepositGold, GoHomeAndSleepTilRested, QuenchThirst, EnterMineAndDigForNugge };
+    public enum StateName {NULL, VisitBankAndDepositGold, GoHomeAndSleepTilRested, QuenchThirst, EnterMineAndDigForNugget };
     /// <summary>
     /// 状态
     /// </summary>
-    public StateName stateName;
+    public virtual StateName stateName
+    {
+        get
+        {
+            return StateName.NULL;
+        }
+    }
     /// <summary>
     /// 当状态进入时执行
     /// </summary>

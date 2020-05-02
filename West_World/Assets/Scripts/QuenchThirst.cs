@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class QuenchThirst : State
 {
-    public new StateName stateName = StateName.QuenchThirst;
+    public override StateName stateName
+    {
+        get
+        {
+            return StateName.QuenchThirst;
+        }
+    }
     int timer = 0;
     public override void Enter(Miner miner)
     {

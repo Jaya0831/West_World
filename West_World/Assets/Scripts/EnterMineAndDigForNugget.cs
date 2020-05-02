@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class EnterMineAndDigForNugget : State
 {
+    public override StateName stateName
+    {
+        get
+        {
+            return StateName.EnterMineAndDigForNugget;
+        }
+    }
     public int timer;
-    public new StateName stateName = StateName.EnterMineAndDigForNugge;
     public override void Enter(Miner miner)
     {
+        Debug.Log("Dig_Enter");
         miner.GoTo(Node.Location_Type.Mine);
         timer = 1;
     }

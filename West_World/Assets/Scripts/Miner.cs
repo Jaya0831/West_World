@@ -41,8 +41,6 @@ public class Miner : BaseGameEntity
     /// 路径
     /// </summary>
     public List<Vector3> path = new List<Vector3>();
-    public State state = new EnterMineAndDigForNugget();
-
     private void Awake()
     {
         m_StateMachine = stateMachine.GetComponent<StateMachine>();
