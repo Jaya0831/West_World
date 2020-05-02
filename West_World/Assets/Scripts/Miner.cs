@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Miner : BaseGameEntity
 {
+    public GameObject stateMachine;
     /// <summary>
-    /// 表示当前状态实例的指针
+    /// Mine的StateMachine实例
     /// </summary>
-    private State m_CurrentState = new GoHomeAndSleepTilRested();
+    public StateMachine m_StateMachine;
     /// <summary>
     /// 位置信息
     /// </summary>
@@ -40,7 +41,12 @@ public class Miner : BaseGameEntity
     /// 路径
     /// </summary>
     public List<Vector3> path = new List<Vector3>();
+    public State state = new EnterMineAndDigForNugget();
 
+    private void Awake()
+    {
+        m_StateMachine = stateMachine.GetComponent<StateMachine>();
+    }
     private void Start()
     {
         m_ID = 0;
@@ -60,13 +66,7 @@ public class Miner : BaseGameEntity
                 path.RemoveAt(path.Count - 1);
             }
         }
-        m_CurrentState.Execute(this);
-    }
-    public void ChangeState(State newState)
-    {
-        m_CurrentState.Exit(this);
-        m_CurrentState = newState;
-        m_CurrentState.Enter(this);
+        GetComponent<Animator>().SetInteger("path", path.Count);
     }
     public void GoTo(Node.Location_Type destinaton)
     {

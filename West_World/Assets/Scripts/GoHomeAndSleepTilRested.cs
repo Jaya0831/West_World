@@ -5,6 +5,7 @@ using UnityEngine;
 public class GoHomeAndSleepTilRested : State
 {
     int timer;
+    public new StateName stateName = StateName.GoHomeAndSleepTilRested;
     public override void Enter(Miner miner)
     {
         miner.GoTo(Node.Location_Type.Home);
@@ -16,7 +17,7 @@ public class GoHomeAndSleepTilRested : State
         {
             if (miner.m_Fatigue == 0) 
             {
-                miner.ChangeState(new EnterMineAndDigForNugget());
+                miner.m_StateMachine.RevertToPrevious();
             }
             else
             {

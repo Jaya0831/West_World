@@ -2,8 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class State : MonoBehaviour
 {
+    /// <summary>
+    /// 状态类名称
+    /// </summary>
+    public enum StateName {VisitBankAndDepositGold, GoHomeAndSleepTilRested, QuenchThirst, EnterMineAndDigForNugge };
+    /// <summary>
+    /// 状态
+    /// </summary>
+    public StateName stateName;
     /// <summary>
     /// 当状态进入时执行
     /// </summary>

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class QuenchThirst : State
 {
+    public new StateName stateName = StateName.QuenchThirst;
     int timer = 0;
     public override void Enter(Miner miner)
     {
@@ -16,14 +17,14 @@ public class QuenchThirst : State
         {
             if (miner.m_Thirst == 0)
             {
-                if (miner.m_Fatigue > 7)
-                {
-                    miner.ChangeState(new GoHomeAndSleepTilRested());
-                }
-                else
-                {
-                    miner.ChangeState(new EnterMineAndDigForNugget());
-                }
+                miner.m_StateMachine.RevertToPrevious();
+                //if (miner.m_Fatigue > 7)
+                //{
+                //    miner.m_StateMachine.ChangeState(new GoHomeAndSleepTilRested());
+                //}
+                //else
+                //{
+                //}
             }
             else
             {
