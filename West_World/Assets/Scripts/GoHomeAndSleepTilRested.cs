@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoHomeAndSleepTilRested : State
+public class GoHomeAndSleepTilRested : State<Miner>
 {
     int timer;
     public override StateName stateName

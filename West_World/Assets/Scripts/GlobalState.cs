@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GlobalState : State
+public class GlobalState : State<Miner>
 {
     public override void Execute(Miner miner)
     {

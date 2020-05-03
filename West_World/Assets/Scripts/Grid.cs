@@ -56,13 +56,11 @@ public class Grid : MonoBehaviour
     /// <summary>
     /// 别走比分对应的贴图
     /// </summary>
-    ///
-    //TODO: 有些地方是可以踩到的，但在寻路但过程中视为障碍物，比如家，酒吧，矿山，银行等等
     public List<Sprite> sprite_obstacle = new List<Sprite>();
     /// <summary>
-    /// 地点位置信息
+    /// 地点位置信息（0到3是miner的四个目的地，4，5是厕所和floor）
     /// </summary>
-    public List<Vector3>[] objectInf = new List<Vector3>[4];
+    public List<Vector3>[] objectInf = new List<Vector3>[6];
 
 
     private void Awake()
@@ -72,7 +70,7 @@ public class Grid : MonoBehaviour
         y_node = Mathf.RoundToInt(y / grid_y);
         grid = new Node[x_node, y_node];
         CreateTheGrid();
-        TransformTilemapToGrid(tilemap, -5, 4, -5, 4);
+        TransformTilemapToGrid(tilemap, -8, 7, -5, 4);
         //Debug.Log(FromPositionToVector(new Vector3(4.5f, 4.5f, 1)));
         //Debug.Log(FromPositionToVector(new Vector3(4, 4, 1)));
         //Debug.Log(FromPositionToVector(new Vector3(3.5f, 3.5f, 1)));
@@ -154,11 +152,12 @@ public class Grid : MonoBehaviour
         Vector2Int dest_vec2 = FromPositionToVector(destination);
         Vector2Int now_vec2 = FromPositionToVector(now);
         // 如果目的地是m_Location_Type中的一种，先把它加入openlist中，处理完后在放回closelist
-        if ((int)grid[dest_vec2.x, dest_vec2.y].type < 4)
+        // HACK:扩展性
+        if ((int)grid[dest_vec2.x, dest_vec2.y].type < 5)
         {
             grid[dest_vec2.x, dest_vec2.y].status = Node.Status.undiscovered;
         }
-        if ((int)grid[now_vec2.x, now_vec2.y].type < 4)
+        if ((int)grid[now_vec2.x, now_vec2.y].type < 5)
         {
             grid[now_vec2.x, now_vec2.y].status = Node.Status.undiscovered;
         }
@@ -261,11 +260,12 @@ public class Grid : MonoBehaviour
                 grid[i, j].parent = null;
             }
         }
-        if ((int)grid[dest_vec2.x, dest_vec2.y].type < 4)
+        //HACK:扩展性
+        if ((int)grid[dest_vec2.x, dest_vec2.y].type < 5)
         {
             grid[dest_vec2.x, dest_vec2.y].status = Node.Status.obstacle;
         }
-        if ((int)grid[now_vec2.x, now_vec2.y].type < 4)
+        if ((int)grid[now_vec2.x, now_vec2.y].type < 5)
         {
             grid[now_vec2.x, now_vec2.y].status = Node.Status.obstacle;
         }
@@ -300,7 +300,7 @@ public class Grid : MonoBehaviour
     /// <param name="down"></param>
     private void TransformTilemapToGrid(Tilemap mytilemap, int left, int right, int down, int up)//最（左/右/上/下）的坐标
     {
-        for (int i = 0; i < 4; i++)//HACK: 扩展性
+        for (int i = 0; i < 6; i++)//HACK: 扩展性
         {
             objectInf[i] = new List<Vector3>();
         }
@@ -331,14 +331,27 @@ public class Grid : MonoBehaviour
                         objectInf[(int)Node.Location_Type.Bank].Add(FromVectorToPosition(new Vector2Int(i - left, j - down)));
                         grid[i - left, j - down].type = Node.Location_Type.Bank;
                     }
+                    else if(mytilemap.GetSprite(new Vector3Int(i, j, 0)) == sprite_obstacle[5])
+                    {
+                        objectInf[(int)Node.Location_Type.Bathroom].Add(FromVectorToPosition(new Vector2Int(i - left, j - down)));
+                        grid[i - left, j - down].type = Node.Location_Type.Bathroom;
+                    }
                     else
                     {
-                        grid[i - left, j - down].type = Node.Location_Type.Thorns;
+                        grid[i - left, j - down].type = Node.Location_Type.Block;
                     }
                 }
                 else
                 {
-                    grid[i - left, j - down].type = Node.Location_Type.Ground;
+                    if (mytilemap.GetSprite(new Vector3Int(i, j, 0)) == sprite_open[0])
+                    {
+                        grid[i - left, j - down].type = Node.Location_Type.Ground;
+                    }
+                    else if (mytilemap.GetSprite(new Vector3Int(i, j, 0)) == sprite_open[2])
+                    {
+                        grid[i - left, j - down].type = Node.Location_Type.Floor;
+                        objectInf[(int)Node.Location_Type.Floor].Add(FromVectorToPosition(new Vector2Int(i - left, j - down)));
+                    }
                 }
             }
         }

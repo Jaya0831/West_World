@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuenchThirst : State
+public class QuenchThirst : State<Miner>
 {
     public override StateName stateName
     {
@@ -24,13 +24,6 @@ public class QuenchThirst : State
             if (miner.m_Thirst == 0)
             {
                 miner.m_StateMachine.RevertToPrevious();
-                //if (miner.m_Fatigue > 7)
-                //{
-                //    miner.m_StateMachine.ChangeState(new GoHomeAndSleepTilRested());
-                //}
-                //else
-                //{
-                //}
             }
             else
             {
@@ -41,7 +34,6 @@ public class QuenchThirst : State
                 }
             }
         }
-        
     }
     public override void Exit(Miner miner)
     {

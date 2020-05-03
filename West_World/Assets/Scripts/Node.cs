@@ -30,7 +30,7 @@ public class Node : MonoBehaviour
     /// <summary>
     /// 地点列表
     /// </summary>
-    public enum Location_Type { Mine, Bar, Home, Bank, Ground, Thorns };
+    public enum Location_Type { Mine, Bar, Home, Bank, Bathroom, Floor, Block, Ground };
     /// <summary>
     /// 该地名称
     /// </summary>

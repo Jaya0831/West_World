@@ -7,15 +7,15 @@ public class StateMachine : MonoBehaviour
     /// <summary>
     /// 表示当前状态实例的指针
     /// </summary>
-    public State m_CurrentState = new EnterMineAndDigForNugget();
+    public State<Miner> m_CurrentState = new EnterMineAndDigForNugget();
     /// <summary>
     /// 表示先前状态
     /// </summary>
-    private State m_PreviousState;
+    private State<Miner> m_PreviousState;
     /// <summary>
     /// 表示全局状态
     /// </summary>
-    private State m_GlobalState = new GlobalState();
+    private State<Miner> m_GlobalState = new GlobalState();
     /// <summary>
     /// 拥有它的智能体
     /// </summary>
@@ -38,9 +38,9 @@ public class StateMachine : MonoBehaviour
     /// 转换状态
     /// </summary>
     /// <param name="newState"></param>
-    public void ChangeState(State newState)
+    public void ChangeState(State<Miner> newState)
     {
-        if (m_CurrentState.stateName != State.StateName.VisitBankAndDepositGold) 
+        if (m_CurrentState.stateName != State<Miner>.StateName.VisitBankAndDepositGold) 
         {
             m_PreviousState = m_CurrentState;
         }

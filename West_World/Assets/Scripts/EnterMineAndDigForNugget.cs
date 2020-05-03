@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnterMineAndDigForNugget : State
+public class EnterMineAndDigForNugget : State<Miner>
 {
     public override StateName stateName
     {
@@ -20,11 +20,7 @@ public class EnterMineAndDigForNugget : State
     }
     public override void Execute(Miner miner)
     {
-        //if (miner.m_Thirst > 7 && miner.m_GoldCarried != 0 || miner.m_Fatigue > 7 && miner.m_GoldCarried != 0 || miner.m_GoldCarried == 10)
-        //{
-        //    miner.m_StateMachine.ChangeState(new VisitBankAndDepositGold());
-        //}
-        /*else */if (miner.path.Count == 0)
+        if (miner.path.Count == 0)
         {
             timer++;
             if (timer % 100 == 0)
